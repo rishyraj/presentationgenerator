@@ -1,11 +1,9 @@
 <!doctype html>
 <html>
 	<head><title>Presentation Generator</title></head>
-	<link rel="stylesheet" href="style.css"><body>
-
-	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	</head>
+	<link rel="stylesheet" href="style.css">
+	
+	<body>
 
 	<div class="topbar">Presentation Generator</div>
 
@@ -17,8 +15,12 @@
 
 
 	<form id="upload" enctype="multipart/form-data" method="post" action="/"><p>Upload your presentation:
-	<input type="file" name="file"/><label for="file">Choose a file</label>
-	<input type="submit"/>
+	<input type="file" id="file"/><label for="file">Choose a file</label>
+	
+
+
+
+	<input type="submit" class="button"/>
 	</p></form>
 	</div></body></link>
 	<script src="script.js"></script>
