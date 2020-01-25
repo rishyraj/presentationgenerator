@@ -3,7 +3,9 @@
 	width: '100%';
 	color: white;
 	padding: 5px 5px;
-	font-size: 20px;
+	margin: 20px;
+	align: center;
+	font-size: 96px;
 	font-family: "Segoe UI", Geneva, sans-serif;
 	margin: 0px;
 
@@ -42,7 +44,7 @@ input[type=file] {
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 16px;
+	font-size: 48px;
 }
 
 
