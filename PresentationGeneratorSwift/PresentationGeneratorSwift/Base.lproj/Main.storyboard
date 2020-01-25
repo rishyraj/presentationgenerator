@@ -79,12 +79,18 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
                                 <state key="normal" title="Generate Presentation"/>
+                                <connections>
+                                    <action selector="writeFiles:" destination="bYX-bU-wL4" eventType="touchUpInside" id="Raf-Yv-iZh"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eog-qw-YFs">
-                                <rect key="frame" x="133" y="611" width="111" height="38"/>
+                                <rect key="frame" x="66" y="611" width="246" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
-                                <state key="normal" title="Upload Text"/>
+                                <state key="normal" title="Upload Text (only .txt files)"/>
+                                <connections>
+                                    <action selector="selectFile:" destination="bYX-bU-wL4" eventType="touchUpInside" id="0Br-67-rg8"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter Speech or Upload Text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bg0-DH-j19">
                                 <rect key="frame" x="16" y="44" width="343" height="32"/>

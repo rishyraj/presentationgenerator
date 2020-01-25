@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class TextViewController: UIViewController {
+class TextViewController: UIViewController, UIDocumentPickerDelegate {
+    
     
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var titleLabel: UIView!
     @IBOutlet weak var uploadFile: UIButton!
     @IBOutlet weak var generateButton: UIButton!
-    
     
     
     override func viewDidLoad() {
@@ -46,10 +47,59 @@ class TextViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-
+    
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
     
+    @IBAction func selectFile(_ sender: Any) {
+        let documentPicker = UIDocumentPickerViewController(documentTypes: [kUTTypePlainText as String], in: .import)
+        documentPicker.delegate = self
+        documentPicker.allowsMultipleSelection = false
+        present(documentPicker, animated: true, completion: nil)
+    }
     
+    @IBAction func writeFiles(_ sender: Any) {
+        let file = "test2.txt"
+        let content = "trying a longer text, see if this work"
+        
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = dir.appendingPathComponent(file)
+        
+        do {
+            try content.write(to: fileURL, atomically: false, encoding: .utf8)
+        } catch {
+            print("error in 72")
+        }
+        
+    }
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        print(url)
+        do {
+            let fileContent = try String(contentsOf: url, encoding: .utf8)
+            textView.text = fileContent
+            print(fileContent)
+        } catch {
+            return
+        }
+    }
+    
+    
+}
+
+extension ViewController: UIDocumentPickerDelegate {
+    //    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+    //        print(url)
+    //    }
+    
+    //    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+    //        print(urls)
+    //        do {
+    //            let fileContent = try String(contentsOf: urls[1], encoding: .utf8)
+    //            print(fileContent)
+    //        } catch {
+    //            return
+    //        }
+    //    }
 }
