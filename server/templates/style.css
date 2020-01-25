@@ -1,0 +1,62 @@
+.topbar {
+	background-color: #4040C0;
+	width: '100%';
+	color: white;
+	padding: 5px 5px;
+	margin: 20px;
+	align: center;
+	font-size: 96px;
+	font-family: "Segoe UI", Geneva, sans-serif;
+	margin: 0px;
+
+}
+
+
+body {
+	background-color: #080840;
+	padding: 0px;
+	margin: 0;
+}
+
+
+
+.button {
+	background-color: #7070FF;
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 12px;
+	transition-duration: 0.5s;
+}
+
+.button:hover {
+	background-color:#222222;
+}
+
+input[type=file] {
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 48px;
+}
+
+p {
+	font-family: "Segoe UI", Geneva, sans-serif;
+	color: white;
+	font-size: 48px;
+}
+
+.div1 {
+	background-color: #4040C0;
+	width: 1000px;
+	align: center;
+	margin: 0 auto;
+	padding: 0px 20px;
+}
