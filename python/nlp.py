@@ -177,34 +177,42 @@ image_df = pd.DataFrame({'article_idx': img_article_ids, 'caption': img_captions
                          'num_words': caption_lens, 'number': nums})
 print(f'Number of Images: {image_df.shape[0]}')
 
-embed = hub.load('model\embed')
 
-start_time = time.time()
 
-# saving the use embeddings for all the image captions to a numpy array
-use_img_embedding = np.zeros((len(image_df),512))
-for i, text in enumerate(image_df.caption.values):
-    if i % 100000 == 0 and i > 0:
-        print(f'{i} out of {len(image_df.caption.values)} done in {time.time() - start_time:.2f}s')
-    emb = embed([text])
-    use_img_embedding[i] = emb
-print(f'{i} out of {len(image_df.caption.values)} done')
 
-# normalize embeddings
-use_img_embedding_normalized = use_img_embedding/np.linalg.norm(use_img_embedding,axis=1).reshape(-1,1)
+
+
+# embed = hub.load('model\embed')
+
+# start_time = time.time()
+
+# # saving the use embeddings for all the image captions to a numpy array
+# use_img_embedding = np.zeros((len(image_df),512))
+# for i, text in enumerate(image_df.caption.values):
+#     if i % 100000 == 0 and i > 0:
+#         print(f'{i} out of {len(image_df.caption.values)} done in {time.time() - start_time:.2f}s')
+#     emb = embed([text])
+#     use_img_embedding[i] = emb
+# print(f'{i} out of {len(image_df.caption.values)} done')
+
+# # normalize embeddings
+# use_img_embedding_normalized = use_img_embedding/np.linalg.norm(use_img_embedding,axis=1).reshape(-1,1)
+
+
+
 
 # use predictions
-results_use = predict_use_images(headline,embed, 2)
+# results_use = predict_use_images(headline,embed, 2)
 
-fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(14,5))
-idx = results_use.article_idx.values
-captions = results_use.caption.values
-nums = results_use.number.values
+# fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(14,5))
+# idx = results_use.article_idx.values
+# captions = results_use.caption.values
+# nums = results_use.number.values
 
-print('USE Predictions')
-for i in range(k):
-    img = plt.imread(f'data/images/{idx[i]}_{nums[i]}.jpg')
-    ax[i].imshow(img)
-    ax[i].set_axis_off()
-    ax[i].set_title(captions[i])
-fig.tight_layout()
+# print('USE Predictions')
+# for i in range(k):
+#     img = plt.imread(f'data/images/{idx[i]}_{nums[i]}.jpg')
+#     ax[i].imshow(img)
+#     ax[i].set_axis_off()
+#     ax[i].set_title(captions[i])
+# fig.tight_layout()
