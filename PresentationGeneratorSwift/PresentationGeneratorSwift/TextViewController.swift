@@ -59,20 +59,31 @@ class TextViewController: UIViewController, UIDocumentPickerDelegate {
         present(documentPicker, animated: true, completion: nil)
     }
     
-    @IBAction func writeFiles(_ sender: Any) {
-        let file = "test2.txt"
-        let content = "trying a longer text, see if this work"
+    @IBAction func generatePresentation(_ sender: Any) {
+        let url = URL(string: "http://127.0.0.1:5000/")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let postString = textView.text!
+        request.httpBody = postString.data(using: String.Encoding.utf8);
         
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileURL = dir.appendingPathComponent(file)
+        print(postString)
         
-        do {
-            try content.write(to: fileURL, atomically: false, encoding: .utf8)
-        } catch {
-            print("error in 72")
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                
+                // Check for Error
+                if let error = error {
+                    print("Error took place \(error)")
+                    return
+                }
+         
+                // Convert HTTP Response Data to a String
+                if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                    print("Response data string:\n \(dataString)")
+                }
         }
-        
+        task.resume()
     }
+    
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         print(url)

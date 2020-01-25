@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var generateButton: UIButton!
-    
+    var recordingSession: AVAudioSession!
+    var audioRecorder: AVAudioRecorder!
 
     override func viewDidLoad() {
         super.viewDidLoad()

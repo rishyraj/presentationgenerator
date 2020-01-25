@@ -46,6 +46,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="6Mz-Jn-tc4" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qKd-j3-3bs">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -80,7 +81,7 @@
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
                                 <state key="normal" title="Generate Presentation"/>
                                 <connections>
-                                    <action selector="writeFiles:" destination="bYX-bU-wL4" eventType="touchUpInside" id="Raf-Yv-iZh"/>
+                                    <action selector="generatePresentation:" destination="bYX-bU-wL4" eventType="touchUpInside" id="tYe-Fh-Xtf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eog-qw-YFs">
