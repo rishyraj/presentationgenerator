@@ -157,6 +157,11 @@ def upload_file():
       slides_creater.create_slide(presentation['presentationId'],pageId)
       slides_creater.create_image(presentation['presentationId'],pageId,imgId,img_link)
       print("Image Corresponds with sentence:",info[2])
+      dir_files = os.listdir(UPLOAD_FOLDER)
+
+      for item in dir_files:
+        if (item.endswith(".txt") or item.endswith(".mp3") or item.endswith(".flac")):
+          os.remove(os.path.join(UPLOAD_FOLDER, item))
     return f"https://docs.google.com/presentation/d/{presentation['presentationId']}"
 
 
