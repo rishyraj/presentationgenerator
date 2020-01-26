@@ -1,5 +1,5 @@
 from __future__ import print_function
-#import pickle
+import pickle
 import os.path
 import os
 import io
@@ -41,12 +41,8 @@ def upload_file():
     try:
       print("file")
       f = request.files['file']
-<<<<<<< HEAD
-      print(f.filename)
-=======
       if (f.filename == ""):
         f = request.form['rawtext']
->>>>>>> 9b27266db517fc0ac82509c3849aa1ad4e973e44
     except:
       print("rawtext")
       f = request.form["rawtext"]
@@ -55,7 +51,7 @@ def upload_file():
       textfile = open(UPLOAD_FOLDER + 'raw_text_file.txt', 'w');
       textfile.write(f);
       textfile.close()
-    #  return redirect('/')
+      # return redirect('/')
     elif (allowed_file(f.filename)):
       extension = f.filename.split('.')[-1]
       if (extension == 'txt'):
@@ -84,7 +80,7 @@ def upload_file():
           # print('Transcript: {}'.format(result.alternatives[0].transcript))
           file.write(result.alternatives[0].transcript + '\n')
         file.close()
-        
+      # return redirect('/')
     print('presentation time bitches')
     if os.path.exists('token.pickle'):
       with open('token.pickle', 'rb') as token:
@@ -101,17 +97,18 @@ def upload_file():
         creds = flow.run_local_server(port=0)
       with open('token.pickle', 'wb') as token:
         pickle.dump(creds, token)
-     
-      service = build('slides', 'v1', credentials=creds)
-      presentation = service.presentations().get(
-      presentationId=PRESENTATION_ID
-      ).set_execute()
-      slides = presentation.get('slides')
-      print('presentation created')
-      return redirect('/')
-    else:
-      print('not going well')
-      return 'invalid file extension'
+    service = build('slides', 'v1', credentials=creds)
+    presentation = service.presentations().get(
+    presentationId=PRESENTATION_ID
+    ).execute()
+    slides = presentation.get('slides')
+    print('The presentation contains {} slides:'.format(len(slides)))
+    for i, slide in enumerate(slides):
+        print('- Slide #{} contains {} elements.'.format(
+            i + 1, len(slide.get('pageElements'))))
+    print('presentation created')    
+    return redirect('/')
+
 
 def allowed_file(filename): 
   return '.' in filename and filename.split('.', 1)[1].lower() in ALLOWED_EXTENSIONS
