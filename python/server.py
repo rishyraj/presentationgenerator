@@ -32,6 +32,8 @@ ALLOWED_EXTENSIONS = {'txt', 'flac', 'mp3'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+slides_file_name = ""
+
 @app.route('/')
 def index():        # render the html to page
   print('in the index function')
@@ -54,6 +56,7 @@ def upload_file():
       f = request.form["rawtext"]
     if (isinstance(f,str) or f.filename==""):
       textfile = open(UPLOAD_FOLDER + 'raw_text_file.txt', 'w');
+      slides_file_name = UPLOAD_FOLDER + 'raw_text_file.txt'
       textfile.write(f);
       textfile.close()
       # return redirect('/')
@@ -61,6 +64,7 @@ def upload_file():
       extension = f.filename.split('.')[-1]
       if (extension == 'txt'):
         f.save(UPLOAD_FOLDER + f.filename)
+        slides_file_name = UPLOAD_FOLDER + f.filename
       elif (extension == 'flac'):
             
         f.save(UPLOAD_FOLDER + f.filename)
@@ -102,11 +106,13 @@ def upload_file():
         # Detects speech in the audio file
         response = client.recognize(config, audio)
         file = open(UPLOAD_FOLDER + f.filename.split('.')[0] + '.txt', 'w')
+        slides_file_name = UPLOAD_FOLDER + f.filename.split('.')[0] + '.txt'
         for result in response.results:
           # print('Transcript: {}'.format(result.alternatives[0].transcript))
           file.write(result.alternatives[0].transcript + '\n')
         file.close()
       # return redirect('/')
+    print(slides_file_name)
     print('presentation time bitches')
     if os.path.exists('token.pickle'):
       with open('token.pickle', 'rb') as token:
