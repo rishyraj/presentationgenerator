@@ -27,7 +27,7 @@ client = speech.SpeechClient()
 
 
 UPLOAD_FOLDER = './temp_storage/'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'mp3'}
+ALLOWED_EXTENSIONS = {'txt', 'flac', 'mp3'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -43,14 +43,14 @@ def upload_file():
   creds = None
   if request.method == 'POST':
     try:
-      print("file")
-      f = request.files['file']
+      try:
+        f = request.files['file']
+      except:
+        f = request.files['sound.flac']
       if (f.filename == ""):
         f = request.form['rawtext']
     except:
-      print("rawtext")
       f = request.form["rawtext"]
-      print(f)
     if (isinstance(f,str) or f.filename==""):
       textfile = open(UPLOAD_FOLDER + 'raw_text_file.txt', 'w');
       textfile.write(f);
@@ -60,8 +60,28 @@ def upload_file():
       extension = f.filename.split('.')[-1]
       if (extension == 'txt'):
         f.save(UPLOAD_FOLDER + f.filename)
-      elif (extension == 'pdf'):
-        print("hi")
+      elif (extension == 'flac'):
+        f.save(UPLOAD_FOLDER + f.filename)
+        audio_name = UPLOAD_FOLDER + f.filename
+        # Load audio to memory
+        with io.open(audio_name, 'rb') as audio_file:
+          content = audio_file.read()
+          audio = types.RecognitionAudio(content=content)
+
+        config = types.RecognitionConfig(
+          encoding=enums.RecognitionConfig.AudioEncoding.FLAC,
+          sample_rate_hertz=16000,
+          language_code='en-US',
+          enable_automatic_punctuation=True
+        )
+
+        # Detects speech in the audio file
+        response = client.recognize(config, audio)
+        file = open(UPLOAD_FOLDER + f.filename.split('.')[0] + '.txt', 'w')
+        for result in response.results:
+          # print('Transcript: {}'.format(result.alternatives[0].transcript))
+          file.write(result.alternatives[0].transcript + '\n')
+        file.close()
       elif (extension == 'mp3'):
         f.save(UPLOAD_FOLDER + f.filename)
         audio_name = UPLOAD_FOLDER + f.filename
