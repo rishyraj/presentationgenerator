@@ -31,7 +31,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         self.title = "Voice Input"
         self.tabBarItem.image = UIImage(systemName: "mic")
@@ -39,7 +38,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         self.tabBarItem.badgeColor = UIColor.black
         linkTextField.layer.borderColor = UIColor.lightGray.cgColor
         linkTextField.textColor = UIColor.black
-                    self.linkTextField.textAlignment = .center
+        self.linkTextField.textAlignment = .center
         linkTextField.layer.borderWidth = 1.0
         linkLabel.isHidden = true
         linkTextField.isHidden = true
@@ -129,8 +128,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         }
     }
     
-    
-    
     @IBAction func recordTapped(_ sender: Any) {
         print("tapped")
         linkLabel.isHidden = true
@@ -141,32 +138,15 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         } else {
             print("stopping")
             finishRecording(success: true)
-        
-            
         }
     }
     
     
     @IBAction func generate(_ sender: Any) {
         print("here")
-        
-        //        let requestUrl:URL = URL(string: "http://127.0.0.1:5000/")!
-        //        var request = URLRequest(url: requestUrl)
-        //        request.httpMethod = "POST"
-        //        request.httpBodyStream = InputStream(url: getDocumentsDirectory())
-        //
-        //        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-        //
-        //            if let error = error {
-        //                print("failed")
-        //                return
-        //            }
-        //
-        //            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-        //                print("Response data string:\n \(dataString)")
-        //            }
-        //        }
-        //        task.resume()
+        linkLabel.isHidden = true
+        linkTextField.isHidden = true
+        linkTextField.text = ""
         
         let recordingURL = getDocumentsDirectory().appendingPathComponent("sound.flac")
         let url = "http://127.0.0.1:5000/"
@@ -176,10 +156,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         }, to: url).responseString { (data) in
             var response = data.description as String
             
-            for n in 1...9 {
+            for _ in 1...9 {
                 response = String(response.dropFirst())
             }
-            for n in 1...2{
+            for _ in 1...2{
                 response = String(response.dropLast())
             }
             print(response)
@@ -188,34 +168,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
             self.linkLabel.isHidden = false
             
         }
-//            .responseJSON { (response) in
-//            debugPrint(response)
-//            print("===============================================================")
-//            print(response)
-//            print("===============================================================")
-//        }
-        
-//        let urlURL = URL(string: "http://127.0.0.1:5000/")!
-        
-//        let task = URLSession.shared.dataTask(with: urlURL) { (data, response, error) in
-//            if let error = error {
-//                print("error: \(error)")
-//            } else {
-////                if let response = response as? HTTPURLResponse {
-////
-////                }
-////                if let data = data, let dataString = String(data: data, encoding: .utf8) {
-////
-////                }
-//            }
-//        }
-       
-//        task.resume()
-        
-//        print("=================================================================================")
-//        print("task:\n \()")
-//               print("=================================================================================")
-        
     }
     
     

@@ -55,10 +55,6 @@ class TextViewController: UIViewController, UIDocumentPickerDelegate {
         toolBar.setItems([doneButton], animated: true)
         
         textView.inputAccessoryView = toolBar
-        
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     @objc func dismissKeyboard() {
@@ -66,6 +62,7 @@ class TextViewController: UIViewController, UIDocumentPickerDelegate {
     }
     
     @IBAction func selectFile(_ sender: Any) {
+        clearFields(self)
         let documentPicker = UIDocumentPickerViewController(documentTypes: [kUTTypePlainText as String], in: .import)
         documentPicker.delegate = self
         documentPicker.allowsMultipleSelection = false
@@ -76,10 +73,6 @@ class TextViewController: UIViewController, UIDocumentPickerDelegate {
         let url = URL(string: "http://127.0.0.1:5000/")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        //        let postString = textView.text!
-        //        request.httpBody = postString.data(using: String.Encoding.utf8);
-        //
-        //        print(postString)
         
         let parameters: [String: Any] = [
             "rawtext": textView.text ?? ""
@@ -97,15 +90,10 @@ class TextViewController: UIViewController, UIDocumentPickerDelegate {
             
             // Convert HTTP Response Data to a String
             if let data = data, let dataString = String(data: data, encoding: .utf8) {
-//                print("Response data string:\n \(dataString)")
                 DispatchQueue.main.async {
                     self.textView.text = dataString
                     self.enterSpeechLabel.text = "HERE IS YOUR LINK!"
                 }
-            }
-            
-            if let response = response {
-//                print(response)
             }
         }
         task.resume()
@@ -130,24 +118,6 @@ class TextViewController: UIViewController, UIDocumentPickerDelegate {
     }
     
     
-}
-
-
-
-extension ViewController: UIDocumentPickerDelegate {
-    //    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-    //        print(url)
-    //    }
-    
-    //    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-    //        print(urls)
-    //        do {
-    //            let fileContent = try String(contentsOf: urls[1], encoding: .utf8)
-    //            print(fileContent)
-    //        } catch {
-    //            return
-    //        }
-    //    }
 }
 
 extension Dictionary {

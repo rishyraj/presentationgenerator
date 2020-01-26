@@ -12,6 +12,17 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
+        
+        let voice = ViewController()
+        voice.setItem()
+        voice.viewDidLoad()
+        voice.tabBarItem.image = UIImage(systemName: "mic")
+        voice.tabBarItem.selectedImage = UIImage(systemName: "mic")
+        voice.tabBarItem.badgeColor = UIColor.black
+        
+
 
         // Do any additional setup after loading the view.
     }

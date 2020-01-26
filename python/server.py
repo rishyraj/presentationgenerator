@@ -123,7 +123,6 @@ def upload_file():
       postimg_links = [line.rstrip() for line in f]
     slides_info = get_slides_images(slides_file_name)
     # print(slides_info)        
-    print('presentation time bitches')
     if os.path.exists('token.pickle'):
       with open('token.pickle', 'rb') as token:
         creds = pickle.load(token)
