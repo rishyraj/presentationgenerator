@@ -23,7 +23,7 @@ client = speech.SpeechClient()
 
 
 UPLOAD_FOLDER = './temp_storage/'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'mp3'}
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'mp3', 'mp4'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -58,20 +58,34 @@ def upload_file():
         f.save(UPLOAD_FOLDER + f.filename)
       elif (extension == 'pdf'):
         print("hi")
-      elif (extension == 'mp3'):
+      elif (extension == 'mp3' or extension == 'mp4'):
         f.save(UPLOAD_FOLDER + f.filename)
         audio_name = UPLOAD_FOLDER + f.filename
         # Load audio to memory
         with io.open(audio_name, 'rb') as audio_file:
           content = audio_file.read()
           audio = types.RecognitionAudio(content=content)
-
+        
         config = types.RecognitionConfig(
           encoding=enums.RecognitionConfig.AudioEncoding.ENCODING_UNSPECIFIED,
           sample_rate_hertz=16000,
           language_code='en-US',
           enable_automatic_punctuation=True
         )
+      # elif (extension == 'mp4'):
+      #   f.save(UPLOAD_FOLDER + f.filename)
+      #   audio_name = UPLOAD_FOLDER + f.filename
+      #   # Load audio to memory
+      #   with io.open(audio_name, 'rb') as audio_file:
+      #     content = audio_file.read()
+      #     audio = types.RecognitionAudio(content=content)
+        
+      #   config = types.RecognitionConfig(
+      #     encoding=enums.RecognitionConfig.AudioEncoding.ENCODING_UNSPECIFIED,
+      #     sample_rate_hertz=16000,
+      #     language_code='en-US',
+      #     enable_automatic_punctuation=True
+      #   )
 
         # Detects speech in the audio file
         response = client.recognize(config, audio)
@@ -81,32 +95,32 @@ def upload_file():
           file.write(result.alternatives[0].transcript + '\n')
         file.close()
       # return redirect('/')
-    print('presentation time bitches')
-    if os.path.exists('token.pickle'):
-      with open('token.pickle', 'rb') as token:
-        creds = pickle.load(token)
-        print('credentials valid')
-    if not creds or not creds.valid:
-      print("credentials not valid/not existent")
-      if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-      else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-          'credentials.json', SCOPES
-        )
-        creds = flow.run_local_server(port=0)
-      with open('token.pickle', 'wb') as token:
-        pickle.dump(creds, token)
-    service = build('slides', 'v1', credentials=creds)
-    presentation = service.presentations().get(
-    presentationId=PRESENTATION_ID
-    ).execute()
-    slides = presentation.get('slides')
-    print('The presentation contains {} slides:'.format(len(slides)))
-    for i, slide in enumerate(slides):
-        print('- Slide #{} contains {} elements.'.format(
-            i + 1, len(slide.get('pageElements'))))
-    print('presentation created')    
+    # print('presentation time bitches')
+    # if os.path.exists('token.pickle'):
+    #   with open('token.pickle', 'rb') as token:
+    #     creds = pickle.load(token)
+    #     print('credentials valid')
+    # if not creds or not creds.valid:
+    #   print("credentials not valid/not existent")
+    #   if creds and creds.expired and creds.refresh_token:
+    #     creds.refresh(Request())
+    #   else:
+    #     flow = InstalledAppFlow.from_client_secrets_file(
+    #       'credentials.json', SCOPES
+    #     )
+    #     creds = flow.run_local_server(port=0)
+    #   with open('token.pickle', 'wb') as token:
+    #     pickle.dump(creds, token)
+    # service = build('slides', 'v1', credentials=creds)
+    # presentation = service.presentations().get(
+    # presentationId=PRESENTATION_ID
+    # ).execute()
+    # slides = presentation.get('slides')
+    # print('The presentation contains {} slides:'.format(len(slides)))
+    # for i, slide in enumerate(slides):
+    #     print('- Slide #{} contains {} elements.'.format(
+    #         i + 1, len(slide.get('pageElements'))))
+    # print('presentation created')    
     return redirect('/')
 
 
