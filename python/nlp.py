@@ -8,12 +8,7 @@ import json
 import csv
 import numpy as np
 import time
-from PIL import Image
 import pickle
-# plotting
-import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_style('whitegrid')
 stopwords = s.words('english')
 np.seterr(divide='ignore', invalid='ignore')
 
