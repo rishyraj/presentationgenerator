@@ -2,3 +2,4 @@ python/data
 api_key/
 python/model
 python/test_use.py
+server/credentials.json
