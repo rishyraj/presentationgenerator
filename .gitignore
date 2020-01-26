@@ -6,4 +6,6 @@ server/credentials.json
 python/credentials.json
 python/token.pickle
 python/__pycache__
-python/temp_storage/sample.txt
+python/temp_storage/*.txt
+python/temp_storage/*.flac
+python/temp_storage/*.mp3
