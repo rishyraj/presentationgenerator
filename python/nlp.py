@@ -267,42 +267,43 @@ def train(captions,min_words,D):
     np.save('data/indexed_data/embeddings.npy',image_embeddings)
     print('files saved at data/indexed_data')
 
+def get_slides_images(text_filepath):
+    start_time = time.time()
+    #load indexed data
+
+    image_df = pd.read_csv('data/indexed_data/image_df.csv')
+    image_embeddings = np.load('data/indexed_data/embeddings.npy')
+
+    # Load Glove Vectors
+    words_dict = load_glove()
+    
+    k = 1
+
+    slides = create_slides_text(text_filepath)
+
+    slide_images_data = []
+    for slide in slides:
+        image_data = [predict_glove_images(text,words_dict,image_df,image_embeddings, k) for text in slide]
+        for img_data in image_data:
+            img_name = img_data.article_idx.values
+            img_nums = img_data.number.values
+            img_description = img_data.caption.values
+            # print((img_name,img_nums,img_description),'\n')
+            slide_images_data.append((img_name,img_nums,img_description))
+        # slide_images_data.append(image_data)
+    
+    duration = time.time()-start_time
+
+    print("Created Metadata in",duration,"seconds")
+    return slide_images_data
+
+# print(get_slides_images('sample.txt'))
+
 # captions = 'data/captioning_dataset.json'
 # min_words = 5
 # D = 50
 # train(captions,min_words,D)
 
-start_time = time.time()
-#load indexed data
-
-image_df = pd.read_csv('data/indexed_data/image_df.csv')
-image_embeddings = np.load('data/indexed_data/embeddings.npy')
-
 # print(image_embeddings)
 
-# Load Glove Vectors
-words_dict = load_glove()
 
-
-k = 1
-
-slides = create_slides_text('sample.txt')
-print(slides[1])
-
-images_data = [predict_glove_images(text,words_dict,image_df,image_embeddings, k) for text in slides[1]]
-duration = time.time()-start_time
-
-print("Created Metadata in",duration,"seconds")
-
-
-images = []
-
-for img_data in images_data:
-    img_name = img_data.article_idx.values
-    img_nums = img_data.number.values
-    img_description = img_data.caption.values
-    print(img_name,img_nums,img_description)
-    images.append(Image.open(f'data/images/resized/{img_name[0]}_{img_nums[0]}.jpg'))
-
-for img in images:
-    img.show()
