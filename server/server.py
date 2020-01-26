@@ -11,10 +11,13 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 from flask import Flask, render_template, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
+import uuid
+
+gen_uuid = lambda:str(uuid.uuid4())
 
 
-
-SCOPES = ['https://www.googleapis.com/auth/presentations.readonly']
+# SCOPES = ['https://www.googleapis.com/auth/presentations.readonly']
+SCOPES = ['https://www.googleapis.com/auth/drive']
 PRESENTATION_ID = '1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc'
 
 
@@ -98,15 +101,22 @@ def upload_file():
       with open('token.pickle', 'wb') as token:
         pickle.dump(creds, token)
     service = build('slides', 'v1', credentials=creds)
-    presentation = service.presentations().get(
-    presentationId=PRESENTATION_ID
-    ).execute()
-    slides = presentation.get('slides')
-    print('The presentation contains {} slides:'.format(len(slides)))
-    for i, slide in enumerate(slides):
-        print('- Slide #{} contains {} elements.'.format(
-            i + 1, len(slide.get('pageElements'))))
-    print('presentation created')    
+    body = {
+    'title': "Sample Blank Presentation"
+    }
+    presentation = service.presentations() \
+        .create(body=body).execute()
+    print('Created presentation with ID: {0}'.format(
+        presentation.get('presentationId')))
+    # presentation = service.presentations().get(
+    # presentationId=PRESENTATION_ID
+    # ).execute()
+    # slides = presentation.get('slides')
+    # print('The presentation contains {} slides:'.format(len(slides)))
+    # for i, slide in enumerate(slides):
+    #     print('- Slide #{} contains {} elements.'.format(
+    #         i + 1, len(slide.get('pageElements'))))
+    # print('presentation created')    
     return redirect('/')
 
 
