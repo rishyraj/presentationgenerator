@@ -1,11 +1,11 @@
 from __future__ import print_function
-import pickle
+#import pickle
 import os.path
 import os
 import io
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
+#from googleapiclient.discovery import build
+#from google_auth_oauthlib.flow import InstalledAppFlow
+#from google.auth.transport.requests import Request
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
@@ -43,8 +43,8 @@ def upload_file():
       if (f.filename == ""):
         f = request.form['rawtext']
     except:
-      f = request.form['rawtext']
-      print(type(f))
+      f = request.form["rawtext"]
+      print(f)
     if (isinstance(f,str)):
       textfile = open(UPLOAD_FOLDER + 'raw_text_file.txt', 'w');
       textfile.write(f);
