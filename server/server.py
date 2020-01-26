@@ -11,10 +11,13 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 from flask import Flask, render_template, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
+import uuid
+
+gen_uuid = lambda:str(uuid.uuid4())
 
 
-
-SCOPES = ['https://www.googleapis.com/auth/presentations.readonly']
+# SCOPES = ['https://www.googleapis.com/auth/presentations.readonly']
+SCOPES = ['https://www.googleapis.com/auth/drive']
 PRESENTATION_ID = '1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc'
 
 
@@ -95,6 +98,7 @@ def upload_file():
           file.write(result.alternatives[0].transcript + '\n')
         file.close()
       # return redirect('/')
+<<<<<<< HEAD
     # print('presentation time bitches')
     # if os.path.exists('token.pickle'):
     #   with open('token.pickle', 'rb') as token:
@@ -112,6 +116,32 @@ def upload_file():
     #   with open('token.pickle', 'wb') as token:
     #     pickle.dump(creds, token)
     # service = build('slides', 'v1', credentials=creds)
+=======
+    print('presentation time bitches')
+    if os.path.exists('token.pickle'):
+      with open('token.pickle', 'rb') as token:
+        creds = pickle.load(token)
+        print('credentials valid')
+    if not creds or not creds.valid:
+      print("credentials not valid/not existent")
+      if creds and creds.expired and creds.refresh_token:
+        creds.refresh(Request())
+      else:
+        flow = InstalledAppFlow.from_client_secrets_file(
+          'credentials.json', SCOPES
+        )
+        creds = flow.run_local_server(port=0)
+      with open('token.pickle', 'wb') as token:
+        pickle.dump(creds, token)
+    service = build('slides', 'v1', credentials=creds)
+    body = {
+    'title': "Sample Blank Presentation"
+    }
+    presentation = service.presentations() \
+        .create(body=body).execute()
+    print('Created presentation with ID: {0}'.format(
+        presentation.get('presentationId')))
+>>>>>>> 1842134de4fe5ad190de291489dc0c97617e0eb1
     # presentation = service.presentations().get(
     # presentationId=PRESENTATION_ID
     # ).execute()
