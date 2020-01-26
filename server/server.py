@@ -3,9 +3,9 @@ from __future__ import print_function
 import os.path
 import os
 import io
-#from googleapiclient.discovery import build
-#from google_auth_oauthlib.flow import InstalledAppFlow
-#from google.auth.transport.requests import Request
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
@@ -39,11 +39,14 @@ def upload_file():
   creds = None
   if request.method == 'POST':
     try:
+      print("file")
       f = request.files['file']
+      print(f.filename)
     except:
+      print("rawtext")
       f = request.form["rawtext"]
       print(f)
-    if (isinstance(f,str)):
+    if (isinstance(f,str) or f.filename==""):
       textfile = open(UPLOAD_FOLDER + 'raw_text_file.txt', 'w');
       textfile.write(f);
       textfile.close()
