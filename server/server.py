@@ -41,7 +41,12 @@ def upload_file():
     try:
       print("file")
       f = request.files['file']
+<<<<<<< HEAD
       print(f.filename)
+=======
+      if (f.filename == ""):
+        f = request.form['rawtext']
+>>>>>>> 9b27266db517fc0ac82509c3849aa1ad4e973e44
     except:
       print("rawtext")
       f = request.form["rawtext"]
@@ -50,7 +55,7 @@ def upload_file():
       textfile = open(UPLOAD_FOLDER + 'raw_text_file.txt', 'w');
       textfile.write(f);
       textfile.close()
-      return redirect('/')
+    #  return redirect('/')
     elif (allowed_file(f.filename)):
       extension = f.filename.split('.')[-1]
       if (extension == 'txt'):
@@ -80,28 +85,32 @@ def upload_file():
           file.write(result.alternatives[0].transcript + '\n')
         file.close()
         
-      # if os.path.exists('token.pickle'):
-      #   with open('token.pickle', 'rb') as token:
-      #     creds = pickle.load(token)
-      # if not creds or not creds.valid:
-      #   if creds and creds.expired and creds.refresh_token:
-      #     creds.refresh(Request())
-      #   else:
-      #     flow = InstalledAppFlow.from_client_secrets_file(
-      #       'credentials.json', SCOPES
-      #     )
-      #     creds = flow.run_local_server(port=0)
-      #   with open('token.pickle', 'wb') as token:
-      #     pickle.dump(creds, token)
-        
-      #   service = build('slides', 'v1', credentials=creds)
-
-      #   presentation = service.presentations().get(
-      #     presentationId=PRESENTATION_ID
-      #   ).set_execute()
-      #   slides = presentation.get('slides')
+    print('presentation time bitches')
+    if os.path.exists('token.pickle'):
+      with open('token.pickle', 'rb') as token:
+        creds = pickle.load(token)
+        print('credentials valid')
+    if not creds or not creds.valid:
+      print("credentials not valid/not existent")
+      if creds and creds.expired and creds.refresh_token:
+        creds.refresh(Request())
+      else:
+        flow = InstalledAppFlow.from_client_secrets_file(
+          'credentials.json', SCOPES
+        )
+        creds = flow.run_local_server(port=0)
+      with open('token.pickle', 'wb') as token:
+        pickle.dump(creds, token)
+     
+      service = build('slides', 'v1', credentials=creds)
+      presentation = service.presentations().get(
+      presentationId=PRESENTATION_ID
+      ).set_execute()
+      slides = presentation.get('slides')
+      print('presentation created')
       return redirect('/')
     else:
+      print('not going well')
       return 'invalid file extension'
 
 def allowed_file(filename): 
