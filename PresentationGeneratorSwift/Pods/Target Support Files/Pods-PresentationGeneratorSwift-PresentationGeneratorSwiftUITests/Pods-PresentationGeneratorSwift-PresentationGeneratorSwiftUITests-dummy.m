@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_PresentationGeneratorSwift_PresentationGeneratorSwiftUITests : NSObject
+@end
+@implementation PodsDummy_Pods_PresentationGeneratorSwift_PresentationGeneratorSwiftUITests
+@end
