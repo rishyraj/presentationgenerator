@@ -12,7 +12,7 @@ from google.cloud.speech import types
 from flask import Flask, render_template, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
 import uuid
-from slides import create_slide, create_presentation, get_slide_ct
+from nlp import get_slides_images
 from slides_snippets import SlidesSnippets as SS
 gen_uuid = lambda:str(uuid.uuid4())
 
@@ -112,7 +112,14 @@ def upload_file():
           file.write(result.alternatives[0].transcript + '\n')
         file.close()
       # return redirect('/')
+    
     print(slides_file_name)
+    postimg_links_file = "postimage.txt"
+    postimg_links = []
+    with open(postimg_links_file) as f:
+      postimg_links = [line.rstrip() for line in f]
+    slides_info = get_slides_images(slides_file_name)
+    # print(slides_info)        
     print('presentation time bitches')
     if os.path.exists('token.pickle'):
       with open('token.pickle', 'rb') as token:
@@ -135,9 +142,22 @@ def upload_file():
     slides_creater = SS(SLIDES,creds)
 
     presentation = slides_creater.create_presentation("Whitty Wresentation")
-    pageId = gen_uuid()
-    slides_creater.create_slide(presentation['presentationId'],pageId)
-    slides_creater.create_image(presentation['presentationId'],pageId)
+    ct = 1
+    for info in slides_info[::-1]:
+      img_name = info[0][0]+"-"+str(info[1][0])
+      print(img_name)
+      img_link = ""
+      for link in postimg_links:
+          if (img_name in link):
+              img_link=link
+              break
+      print(img_link)
+      pageId = gen_uuid()
+      imgId = "My_Image_"+str(ct)
+      ct+=1
+      slides_creater.create_slide(presentation['presentationId'],pageId)
+      slides_creater.create_image(presentation['presentationId'],pageId,imgId,img_link)
+      print("Image Corresponds with sentence:",info[2])
     return f"https://docs.google.com/presentation/d/{presentation['presentationId']}"
 
 

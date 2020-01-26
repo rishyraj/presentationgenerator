@@ -131,7 +131,7 @@ class SlidesSnippets(object):
         # [END slides_create_textbox_with_text]
         return response
 
-    def create_image(self, presentation_id, page_id):
+    def create_image(self, presentation_id, page_id,imgId,IMAGE_URL="https://images8.alphacoders.com/926/thumb-1920-926492.jpg"):
         slides_service = self.service
         # [START slides_create_image]
         # Create a new image, using the supplied object ID,
@@ -140,9 +140,9 @@ class SlidesSnippets(object):
                     #  'googlelogo/2x/googlelogo_color_272x92dp.png')
         # IMAGE_URL = "https://aff5fa4925746bf9c161-fb36f18ca122a30f6899af8eef8fa39b.ssl.cf5.rackcdn.com/images/Masthead_Toad.17345b1513ac044897cfc243542899dce541e8dc.9afde10b.png"
         # IMAGE_URL = "https://images.wallpaperscraft.com/image/bird_silhouette_vector_134154_1920x1080.jpg"
-        IMAGE_URL = "https://images8.alphacoders.com/926/thumb-1920-926492.jpg"
+        # IMAGE_URL = "https://images8.alphacoders.com/926/thumb-1920-926492.jpg"
         requests = []
-        image_id = 'MyImage_01'
+        image_id = imgId
         emu4M = {
             'magnitude': 720,
             'unit': 'PT'

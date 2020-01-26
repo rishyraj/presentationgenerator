@@ -80,20 +80,31 @@ def split_sentences(sentences,n_groups=3):
 def create_slides_text(filepath):
 
     data = []
-    with open('C:\\Users\\Rish\Desktop\\Boilermake\\presentationgenerator\\python\\sample.txt',encoding='utf-8') as myfile:
+    with open(filepath,encoding='utf-8') as myfile:
         data = myfile.readlines()
 
     data = [x.strip() for x in data]
-    slides = [] 
-    for p in data:
-        sents = sent_tokenize(p)
-        # print(split_sentences(sents,n_groups=2))
-        slide = []
-        for group in split_sentences(sents,n_groups=2):
-            summary = summarize_text(article_text=group,n_sent=1)
-            slide.append(summary)
-        slides.append(slide)
-    return slides
+    if (len(data)==1):
+        slides = []
+        for p in data:
+            sents = sent_tokenize(p)
+            slide = []
+            for group in sents:
+                summary = summarize_text(article_text=group,n_sent=1)
+                slide.append(summary)
+            slides.append(slide)
+        return slides
+    else:
+        slides = [] 
+        for p in data:
+            sents = sent_tokenize(p)
+            # print(split_sentences(sents,n_groups=2))
+            slide = []
+            for group in split_sentences(sents,n_groups=2):
+                summary = summarize_text(article_text=group,n_sent=1)
+                slide.append(summary)
+            slides.append(slide)
+        return slides
 
 def vec(w,words_dict, D=50):
     """
@@ -278,11 +289,11 @@ def get_slides_images(text_filepath):
 
     slide_images_data = []
     for slide in slides:
-        image_data = [predict_glove_images(text,words_dict,image_df,image_embeddings, k) for text in slide]
-        for img_data in image_data:
+        image_data = [(predict_glove_images(text,words_dict,image_df,image_embeddings, k),text) for text in slide]
+        for img_data,sent in image_data:
             img_name = img_data.article_idx.values
             img_nums = img_data.number.values
-            img_description = img_data.caption.values
+            img_description = sent
             # print((img_name,img_nums,img_description),'\n')
             slide_images_data.append((img_name,img_nums,img_description))
         # slide_images_data.append(image_data)
