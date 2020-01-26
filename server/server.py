@@ -41,8 +41,8 @@ def upload_file():
     try:
       f = request.files['file']
     except:
-      print(request.form)
       f = request.form["rawtext"]
+      print(f)
     if (isinstance(f,str)):
       textfile = open(UPLOAD_FOLDER + 'raw_text_file.txt', 'w');
       textfile.write(f);
