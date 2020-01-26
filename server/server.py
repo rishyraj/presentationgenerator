@@ -47,7 +47,6 @@ def upload_file():
       except:
         f = request.files['sound.flac']
 
-      f = request.files['file']
       if (f.filename == ""):
         f = request.form['rawtext']
     except:
@@ -60,11 +59,7 @@ def upload_file():
       textfile = open(UPLOAD_FOLDER + 'raw_text_file.txt', 'w');
       textfile.write(f);
       textfile.close()
-<<<<<<< HEAD
-      return redirect('/')
-=======
-      # return redirect('/')
->>>>>>> 1842134de4fe5ad190de291489dc0c97617e0eb1
+      return 'www.FUCKSWIFTV2.0.com'
     elif (allowed_file(f.filename)):
       extension = f.filename.split('.')[-1]
       if (extension == 'txt'):
@@ -89,6 +84,7 @@ def upload_file():
           )
 
         if (extension == 'flac'):
+          print("flaccy")
           config = types.RecognitionConfig(
             encoding=enums.RecognitionConfig.AudioEncoding.FLAC,
             sample_rate_hertz=16000,
@@ -103,8 +99,9 @@ def upload_file():
           # print('Transcript: {}'.format(result.alternatives[0].transcript))
           file.write(result.alternatives[0].transcript + '\n')
         file.close()
-<<<<<<< HEAD
-      return redirect('/')
+    #  app.post('http://127.0.0.1:5000', 'abcdefg')
+    #  return redirect('/')
+      return "https://www.FUCKSWIFT.com"
         
    # print('presentation time bitches')
    # if os.path.exists('token.pickle'):
@@ -133,32 +130,31 @@ def upload_file():
    # else:
    #   print('not going well')
    #   return 'invalid file extension'
-=======
       # return redirect('/')
-    print('presentation time bitches')
-    if os.path.exists('token.pickle'):
-      with open('token.pickle', 'rb') as token:
-        creds = pickle.load(token)
-        print('credentials valid')
-    if not creds or not creds.valid:
-      print("credentials not valid/not existent")
-      if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-      else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-          'credentials.json', SCOPES
-        )
-        creds = flow.run_local_server(port=0)
-      with open('token.pickle', 'wb') as token:
-        pickle.dump(creds, token)
-    service = build('slides', 'v1', credentials=creds)
-    body = {
-    'title': "Sample Blank Presentation"
-    }
-    presentation = service.presentations() \
-        .create(body=body).execute()
-    print('Created presentation with ID: {0}'.format(
-        presentation.get('presentationId')))
+   # print('presentation time bitches')
+   # if os.path.exists('token.pickle'):
+   #   with open('token.pickle', 'rb') as token:
+   #     creds = pickle.load(token)
+   #     print('credentials valid')
+   # if not creds or not creds.valid:
+   #   print("credentials not valid/not existent")
+   #   if creds and creds.expired and creds.refresh_token:
+   #     creds.refresh(Request())
+   #   else:
+   #     flow = InstalledAppFlow.from_client_secrets_file(
+   #       'credentials.json', SCOPES
+   #     )
+   #     creds = flow.run_local_server(port=0)
+   #   with open('token.pickle', 'wb') as token:
+   #     pickle.dump(creds, token)
+   # service = build('slides', 'v1', credentials=creds)
+   # body = {
+   # 'title': "Sample Blank Presentation"
+   # }
+   # presentation = service.presentations() \
+   #     .create(body=body).execute()
+   # print('Created presentation with ID: {0}'.format(
+   #     presentation.get('presentationId')))
     # presentation = service.presentations().get(
     # presentationId=PRESENTATION_ID
     # ).execute()
@@ -168,9 +164,8 @@ def upload_file():
     #     print('- Slide #{} contains {} elements.'.format(
     #         i + 1, len(slide.get('pageElements'))))
     # print('presentation created')    
-    return redirect('/')
+    #return redirect('/')
 
->>>>>>> 1842134de4fe5ad190de291489dc0c97617e0eb1
 
 def allowed_file(filename): 
   return '.' in filename and filename.split('.', 1)[1].lower() in ALLOWED_EXTENSIONS

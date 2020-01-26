@@ -8,6 +8,7 @@
 
 import UIKit
 import MobileCoreServices
+var responseMessage = ""
 
 class TextViewController: UIViewController, UIDocumentPickerDelegate {
     
@@ -16,10 +17,22 @@ class TextViewController: UIViewController, UIDocumentPickerDelegate {
     @IBOutlet var titleLabel: UIView!
     @IBOutlet weak var uploadFile: UIButton!
     @IBOutlet weak var generateButton: UIButton!
+    @IBOutlet weak var enterSpeechLabel: UILabel!
     
+    func setItem() {
+        self.title = "Text Input"
+        self.tabBarItem.image = UIImage(systemName: "doc.text")
+        self.tabBarItem.selectedImage = UIImage(systemName: "doc.text")
+        self.tabBarItem.badgeColor = UIColor.black
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = "Text Input"
+        self.tabBarItem.image = UIImage(systemName: "doc.text")
+        self.tabBarItem.selectedImage = UIImage(systemName: "doc.text")
+        self.tabBarItem.badgeColor = UIColor.black
         
         textView.layer.borderWidth = 1.0
         textView.layer.borderColor = UIColor.lightGray.cgColor
@@ -63,30 +76,40 @@ class TextViewController: UIViewController, UIDocumentPickerDelegate {
         let url = URL(string: "http://127.0.0.1:5000/")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-//        let postString = textView.text!
-//        request.httpBody = postString.data(using: String.Encoding.utf8);
-//
-//        print(postString)
+        //        let postString = textView.text!
+        //        request.httpBody = postString.data(using: String.Encoding.utf8);
+        //
+        //        print(postString)
         
         let parameters: [String: Any] = [
             "rawtext": textView.text ?? ""
         ]
         request.httpBody = parameters.percentEncoded()
         
+        
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                
-                // Check for Error
-                if let error = error {
-                    print("Error took place \(error)")
-                    return
+            
+            // Check for Error
+            if let error = error {
+                print("Error took place \(error)")
+                return
+            }
+            
+            // Convert HTTP Response Data to a String
+            if let data = data, let dataString = String(data: data, encoding: .utf8) {
+//                print("Response data string:\n \(dataString)")
+                DispatchQueue.main.async {
+                    self.textView.text = dataString
+                    self.enterSpeechLabel.text = "HERE IS YOUR LINK!"
                 }
-         
-                // Convert HTTP Response Data to a String
-                if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                    print("Response data string:\n \(dataString)")
-                }
+            }
+            
+            if let response = response {
+//                print(response)
+            }
         }
         task.resume()
+        
     }
     
     
@@ -95,14 +118,21 @@ class TextViewController: UIViewController, UIDocumentPickerDelegate {
         do {
             let fileContent = try String(contentsOf: url, encoding: .utf8)
             textView.text = fileContent
-            print(fileContent)
         } catch {
             return
         }
     }
     
     
+    @IBAction func clearFields(_ sender: Any) {
+        self.textView.text = ""
+        self.enterSpeechLabel.text = "Enter Speech or Upload Text"
+    }
+    
+    
 }
+
+
 
 extension ViewController: UIDocumentPickerDelegate {
     //    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
@@ -136,7 +166,7 @@ extension CharacterSet {
     static let urlQueryValueAllowed: CharacterSet = {
         let generalDelimitersToEncode = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4
         let subDelimitersToEncode = "!$&'()*+,;="
-
+        
         var allowed = CharacterSet.urlQueryAllowed
         allowed.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
         return allowed

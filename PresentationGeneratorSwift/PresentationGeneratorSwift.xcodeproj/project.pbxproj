@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,7 @@
 		40653D9223DCCDB200178F39 /* PresentationGeneratorSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40653D9123DCCDB200178F39 /* PresentationGeneratorSwiftTests.swift */; };
 		40653D9D23DCCDB200178F39 /* PresentationGeneratorSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40653D9C23DCCDB200178F39 /* PresentationGeneratorSwiftUITests.swift */; };
 		40653DAB23DCCE4B00178F39 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40653DAA23DCCE4B00178F39 /* TextViewController.swift */; };
+		40859CFE23DD40A50057AA13 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40859CFD23DD40A40057AA13 /* TabBarController.swift */; };
 		86EB9146136143026B38873E /* Pods_PresentationGeneratorSwift_PresentationGeneratorSwiftUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F8270F81DAE80E904003D7 /* Pods_PresentationGeneratorSwift_PresentationGeneratorSwiftUITests.framework */; };
 		D19C4A85E156AA41BDFED2A2 /* Pods_PresentationGeneratorSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17C733DD63362B0835FADFC8 /* Pods_PresentationGeneratorSwift.framework */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		40653D9C23DCCDB200178F39 /* PresentationGeneratorSwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationGeneratorSwiftUITests.swift; sourceTree = "<group>"; };
 		40653D9E23DCCDB200178F39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40653DAA23DCCE4B00178F39 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
+		40859CFD23DD40A40057AA13 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		8015B4664BA732350AF436AB /* Pods-PresentationGeneratorSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PresentationGeneratorSwiftTests.debug.xcconfig"; path = "Target Support Files/Pods-PresentationGeneratorSwiftTests/Pods-PresentationGeneratorSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		979BAF1B5AF20AEC4C1F2DFA /* Pods-PresentationGeneratorSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PresentationGeneratorSwiftTests.release.xcconfig"; path = "Target Support Files/Pods-PresentationGeneratorSwiftTests/Pods-PresentationGeneratorSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		B1F8270F81DAE80E904003D7 /* Pods_PresentationGeneratorSwift_PresentationGeneratorSwiftUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PresentationGeneratorSwift_PresentationGeneratorSwiftUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +124,7 @@
 				40653D7C23DCCDB000178F39 /* SceneDelegate.swift */,
 				40653D7E23DCCDB000178F39 /* ViewController.swift */,
 				40653D8023DCCDB000178F39 /* Main.storyboard */,
+				40859CFD23DD40A40057AA13 /* TabBarController.swift */,
 				40653DAA23DCCE4B00178F39 /* TextViewController.swift */,
 				40653D8323DCCDB100178F39 /* Assets.xcassets */,
 				40653D8523DCCDB100178F39 /* LaunchScreen.storyboard */,
@@ -158,7 +161,6 @@
 				8015B4664BA732350AF436AB /* Pods-PresentationGeneratorSwiftTests.debug.xcconfig */,
 				979BAF1B5AF20AEC4C1F2DFA /* Pods-PresentationGeneratorSwiftTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -414,6 +416,7 @@
 				40653D7F23DCCDB000178F39 /* ViewController.swift in Sources */,
 				40653D7B23DCCDB000178F39 /* AppDelegate.swift in Sources */,
 				40653D7D23DCCDB000178F39 /* SceneDelegate.swift in Sources */,
+				40859CFE23DD40A50057AA13 /* TabBarController.swift in Sources */,
 				40653DAB23DCCE4B00178F39 /* TextViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
