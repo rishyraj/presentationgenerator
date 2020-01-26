@@ -92,6 +92,7 @@ def upload_file():
             enable_automatic_punctuation=True
           ) 
 
+
         # Detects speech in the audio file
         response = client.recognize(config, audio)
         file = open(UPLOAD_FOLDER + f.filename.split('.')[0] + '.txt', 'w')
@@ -131,30 +132,31 @@ def upload_file():
    #   print('not going well')
    #   return 'invalid file extension'
       # return redirect('/')
-   # print('presentation time bitches')
-   # if os.path.exists('token.pickle'):
-   #   with open('token.pickle', 'rb') as token:
-   #     creds = pickle.load(token)
-   #     print('credentials valid')
-   # if not creds or not creds.valid:
-   #   print("credentials not valid/not existent")
-   #   if creds and creds.expired and creds.refresh_token:
-   #     creds.refresh(Request())
-   #   else:
-   #     flow = InstalledAppFlow.from_client_secrets_file(
-   #       'credentials.json', SCOPES
-   #     )
-   #     creds = flow.run_local_server(port=0)
-   #   with open('token.pickle', 'wb') as token:
-   #     pickle.dump(creds, token)
-   # service = build('slides', 'v1', credentials=creds)
-   # body = {
-   # 'title': "Sample Blank Presentation"
-   # }
-   # presentation = service.presentations() \
-   #     .create(body=body).execute()
-   # print('Created presentation with ID: {0}'.format(
-   #     presentation.get('presentationId')))
+
+    print('presentation time bitches')
+    if os.path.exists('token.pickle'):
+      with open('token.pickle', 'rb') as token:
+        creds = pickle.load(token)
+        print('credentials valid')
+    if not creds or not creds.valid:
+      print("credentials not valid/not existent")
+      if creds and creds.expired and creds.refresh_token:
+        creds.refresh(Request())
+      else:
+        flow = InstalledAppFlow.from_client_secrets_file(
+          'credentials.json', SCOPES
+        )
+        creds = flow.run_local_server(port=0)
+      with open('token.pickle', 'wb') as token:
+        pickle.dump(creds, token)
+    service = build('slides', 'v1', credentials=creds)
+    body = {
+    'title': "Sample Blank Presentation"
+    }
+    presentation = service.presentations() \
+        .create(body=body).execute()
+    print('Created presentation with ID: {0}'.format(
+        presentation.get('presentationId')))
     # presentation = service.presentations().get(
     # presentationId=PRESENTATION_ID
     # ).execute()
