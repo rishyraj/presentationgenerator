@@ -84,6 +84,7 @@ def upload_file():
         # Detects speech in the audio file
         response = client.recognize(config, audio)
         file = open(UPLOAD_FOLDER + f.filename.split('.')[0] + '.txt', 'w')
+        slides_file_name = UPLOAD_FOLDER + f.filename.split('.')[0] + '.txt'
         for result in response.results:
           # print('Transcript: {}'.format(result.alternatives[0].transcript))
           file.write(result.alternatives[0].transcript + '\n')
@@ -113,7 +114,6 @@ def upload_file():
         file.close()
       # return redirect('/')
     
-    print(slides_file_name)
     postimg_links_file = "postimage.txt"
     postimg_links = []
     with open(postimg_links_file) as f:
