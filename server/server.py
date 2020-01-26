@@ -3,9 +3,9 @@ import pickle
 import os.path
 import os
 import io
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
+#from googleapiclient.discovery import build
+#from google_auth_oauthlib.flow import InstalledAppFlow
+#from google.auth.transport.requests import Request
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
@@ -26,7 +26,7 @@ client = speech.SpeechClient()
 
 
 UPLOAD_FOLDER = './temp_storage/'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'mp3', 'mp4'}
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'mp3', 'flac'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -42,26 +42,32 @@ def upload_file():
   creds = None
   if request.method == 'POST':
     try:
-      print("file")
-      f = request.files['file']
+      try:
+        f = request.files['file']
+      except:
+        f = request.files['sound.flac']
+
       if (f.filename == ""):
         f = request.form['rawtext']
     except:
-      print("rawtext")
+      print(request.files)
+      print(request.json)
+      print(request.form)
       f = request.form["rawtext"]
       print(f)
     if (isinstance(f,str) or f.filename==""):
       textfile = open(UPLOAD_FOLDER + 'raw_text_file.txt', 'w');
       textfile.write(f);
       textfile.close()
-      # return redirect('/')
+      return 'www.FUCKSWIFTV2.0.com'
     elif (allowed_file(f.filename)):
       extension = f.filename.split('.')[-1]
       if (extension == 'txt'):
         f.save(UPLOAD_FOLDER + f.filename)
       elif (extension == 'pdf'):
         print("hi")
-      elif (extension == 'mp3' or extension == 'mp4'):
+      elif (extension == 'mp3' or extension == 'flac'):
+        print('here')
         f.save(UPLOAD_FOLDER + f.filename)
         audio_name = UPLOAD_FOLDER + f.filename
         # Load audio to memory
@@ -69,26 +75,23 @@ def upload_file():
           content = audio_file.read()
           audio = types.RecognitionAudio(content=content)
         
-        config = types.RecognitionConfig(
-          encoding=enums.RecognitionConfig.AudioEncoding.ENCODING_UNSPECIFIED,
-          sample_rate_hertz=16000,
-          language_code='en-US',
-          enable_automatic_punctuation=True
-        )
-      # elif (extension == 'mp4'):
-      #   f.save(UPLOAD_FOLDER + f.filename)
-      #   audio_name = UPLOAD_FOLDER + f.filename
-      #   # Load audio to memory
-      #   with io.open(audio_name, 'rb') as audio_file:
-      #     content = audio_file.read()
-      #     audio = types.RecognitionAudio(content=content)
-        
-      #   config = types.RecognitionConfig(
-      #     encoding=enums.RecognitionConfig.AudioEncoding.ENCODING_UNSPECIFIED,
-      #     sample_rate_hertz=16000,
-      #     language_code='en-US',
-      #     enable_automatic_punctuation=True
-      #   )
+        if (extension == 'mp3'):
+          config = types.RecognitionConfig(
+            encoding=enums.RecognitionConfig.AudioEncoding.ENCODING_UNSPECIFIED,
+            sample_rate_hertz=16000,
+            language_code='en-US',
+            enable_automatic_punctuation=True
+          )
+
+        if (extension == 'flac'):
+          print("flaccy")
+          config = types.RecognitionConfig(
+            encoding=enums.RecognitionConfig.AudioEncoding.FLAC,
+            sample_rate_hertz=16000,
+            language_code='en-US',
+            enable_automatic_punctuation=True
+          ) 
+
 
         # Detects speech in the audio file
         response = client.recognize(config, audio)
@@ -97,26 +100,39 @@ def upload_file():
           # print('Transcript: {}'.format(result.alternatives[0].transcript))
           file.write(result.alternatives[0].transcript + '\n')
         file.close()
+    #  app.post('http://127.0.0.1:5000', 'abcdefg')
+    #  return redirect('/')
+      return "https://www.FUCKSWIFT.com"
+        
+   # print('presentation time bitches')
+   # if os.path.exists('token.pickle'):
+   #   with open('token.pickle', 'rb') as token:
+   #     creds = pickle.load(token)
+   #     print('credentials valid')
+   # if not creds or not creds.valid:
+   #   print("credentials not valid/not existent")
+   #   if creds and creds.expired and creds.refresh_token:
+   #     creds.refresh(Request())
+   #   else:
+   #     flow = InstalledAppFlow.from_client_secrets_file(
+   #       'credentials.json', SCOPES
+   #     )
+   #     creds = flow.run_local_server(port=0)
+   #   with open('token.pickle', 'wb') as token:
+   #     pickle.dump(creds, token)
+     
+   #   service = build('slides', 'v1', credentials=creds)
+   #   presentation = service.presentations().get(
+   #   presentationId=PRESENTATION_ID
+   #   ).set_execute()
+   #   slides = presentation.get('slides')
+   #   print('presentation created')
+   #   return redirect('/')
+   # else:
+   #   print('not going well')
+   #   return 'invalid file extension'
       # return redirect('/')
-<<<<<<< HEAD
-    # print('presentation time bitches')
-    # if os.path.exists('token.pickle'):
-    #   with open('token.pickle', 'rb') as token:
-    #     creds = pickle.load(token)
-    #     print('credentials valid')
-    # if not creds or not creds.valid:
-    #   print("credentials not valid/not existent")
-    #   if creds and creds.expired and creds.refresh_token:
-    #     creds.refresh(Request())
-    #   else:
-    #     flow = InstalledAppFlow.from_client_secrets_file(
-    #       'credentials.json', SCOPES
-    #     )
-    #     creds = flow.run_local_server(port=0)
-    #   with open('token.pickle', 'wb') as token:
-    #     pickle.dump(creds, token)
-    # service = build('slides', 'v1', credentials=creds)
-=======
+
     print('presentation time bitches')
     if os.path.exists('token.pickle'):
       with open('token.pickle', 'rb') as token:
@@ -141,7 +157,6 @@ def upload_file():
         .create(body=body).execute()
     print('Created presentation with ID: {0}'.format(
         presentation.get('presentationId')))
->>>>>>> 1842134de4fe5ad190de291489dc0c97617e0eb1
     # presentation = service.presentations().get(
     # presentationId=PRESENTATION_ID
     # ).execute()
@@ -151,7 +166,7 @@ def upload_file():
     #     print('- Slide #{} contains {} elements.'.format(
     #         i + 1, len(slide.get('pageElements'))))
     # print('presentation created')    
-    return redirect('/')
+    #return redirect('/')
 
 
 def allowed_file(filename): 

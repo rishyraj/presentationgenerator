@@ -16,16 +16,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhv-HF-aR2">
-                                <rect key="frame" x="35" y="506" width="304" height="51"/>
+                                <rect key="frame" x="35" y="387" width="304" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
                                 <state key="normal" title="Generate Presentation"/>
+                                <connections>
+                                    <action selector="generate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Xb-Qr-yPr"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CXP-QB-lTE">
-                                <rect key="frame" x="125" y="256" width="120" height="120"/>
+                                <rect key="frame" x="125" y="137" width="120" height="120"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="mic.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="recordTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="194-Je-n0O"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Link to the Presentation:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NAg-w6-mcG">
+                                <rect key="frame" x="61" y="488" width="248" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4in-M9-vQ4">
+                                <rect key="frame" x="16" y="526" width="343" height="193"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -33,12 +54,14 @@
                     <tabBarItem key="tabBarItem" title="Item" selectedImage="mic" catalog="system" id="VMB-HO-NOB"/>
                     <connections>
                         <outlet property="generateButton" destination="bhv-HF-aR2" id="GC7-fA-83T"/>
+                        <outlet property="linkLabel" destination="NAg-w6-mcG" id="4Oz-SN-ohW"/>
+                        <outlet property="linkTextField" destination="4in-M9-vQ4" id="i0s-mZ-zgm"/>
                         <outlet property="recordButton" destination="CXP-QB-lTE" id="rWr-lH-khN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1023" y="-273"/>
+            <point key="canvasLocation" x="1021.6" y="-273.39901477832512"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="D7P-cU-gs6">
@@ -85,7 +108,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eog-qw-YFs">
-                                <rect key="frame" x="66" y="611" width="246" height="38"/>
+                                <rect key="frame" x="64" y="617" width="246" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <state key="normal" title="Upload Text (only .txt files)"/>
@@ -93,13 +116,21 @@
                                     <action selector="selectFile:" destination="bYX-bU-wL4" eventType="touchUpInside" id="0Br-67-rg8"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter Speech or Upload Text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bg0-DH-j19">
-                                <rect key="frame" x="16" y="44" width="343" height="32"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter Speech or Upload Text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bg0-DH-j19">
+                                <rect key="frame" x="16" y="44" width="294" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Bh-uq-CeJ">
+                                <rect key="frame" x="334" y="46.333333333333258" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="trash" catalog="system"/>
+                                <connections>
+                                    <action selector="clearFields:" destination="bYX-bU-wL4" eventType="touchUpInside" id="E4u-g6-9d1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <gestureRecognizers/>
@@ -107,6 +138,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" selectedImage="doc.text" catalog="system" id="tSJ-Gk-leB"/>
                     <connections>
+                        <outlet property="enterSpeechLabel" destination="bg0-DH-j19" id="KFk-Gl-Pch"/>
                         <outlet property="generateButton" destination="AXa-dU-hQj" id="dvb-Wa-Vzp"/>
                         <outlet property="textView" destination="5zy-rx-E3C" id="YPg-K7-AMX"/>
                         <outlet property="titleLabel" destination="gu7-iQ-aVu" id="KB5-va-ya2"/>
@@ -115,12 +147,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ilD-DJ-L47" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1022" y="555"/>
+            <point key="canvasLocation" x="1021.6" y="554.92610837438428"/>
         </scene>
     </scenes>
     <resources>
         <image name="doc.text" catalog="system" width="56" height="64"/>
         <image name="mic" catalog="system" width="54" height="64"/>
         <image name="mic.circle" catalog="system" width="64" height="60"/>
+        <image name="trash" catalog="system" width="60" height="64"/>
     </resources>
 </document>
