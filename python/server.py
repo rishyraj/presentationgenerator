@@ -47,6 +47,7 @@ def upload_file():
         f = request.files['file']
       except:
         f = request.files['sound.flac']
+
       if (f.filename == ""):
         f = request.form['rawtext']
     except:
@@ -61,6 +62,7 @@ def upload_file():
       if (extension == 'txt'):
         f.save(UPLOAD_FOLDER + f.filename)
       elif (extension == 'flac'):
+            
         f.save(UPLOAD_FOLDER + f.filename)
         audio_name = UPLOAD_FOLDER + f.filename
         # Load audio to memory
